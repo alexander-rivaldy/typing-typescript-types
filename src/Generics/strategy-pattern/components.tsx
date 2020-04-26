@@ -5,21 +5,21 @@ import { Book, BookQuestionProps, Novel, EBook } from './type';
 
 export const titleQuestion: React.FunctionComponent<BookQuestionProps<Book>> = ({
     book,
-    saveToRedux
+    onChangeFunc
 }: BookQuestionProps<Book>) => {
-    return <input type="text" value={book.title} onChange={() => saveToRedux(book, "title")}/>
+    return <input type="text" value={book.title} onChange={() => onChangeFunc(book, "title")}/>
 }
 
 export const genreQuestion: React.FunctionComponent<BookQuestionProps<Novel>> = ({
     book,
-    saveToRedux
+    onChangeFunc
 }: BookQuestionProps<Novel>) => {
-    return <input type="text" value={book.genre} onChange={() => saveToRedux(book, "genre")}/>
+    return <input type="text" value={book.genre} onChange={() => onChangeFunc(book, "genre")}/>
 }
 
 export const platformQuestion: React.FunctionComponent<BookQuestionProps<EBook>> = ({
     book,
-    saveToRedux
+    onChangeFunc
 }: BookQuestionProps<EBook>) => {
-    return <input type="text" value={book.platform} onChange={() => saveToRedux(book, "platform")}/>
+    return <input type="text" value={book.platform} onChange={() => onChangeFunc(book, "platform")}/>
 }

@@ -1,18 +1,22 @@
-import { BookQuestions, Book,  Novel, MapperStrategy, TypeMapperStrategy, EBook } from './type'
+import { Book,  Novel, BookMapperStrategy, BookTypeMapperStrategy, EBook, BookQuestionProps } from './type'
 import { titleQuestion, genreQuestion, platformQuestion } from './components'
 import React from 'react';
 
+
+const validateCommonBookInfo = (book: Book): boolean =>
+    !!novel.id && !!novel.title && !!novel.author
+
 //specific strategy for novel
-const novelQuestions: BookQuestions<Novel> = [
-    titleQuestion   ,
+const novelQuestions: React.FunctionComponent<BookQuestionProps<Novel>>[] = [
+    titleQuestion,
     genreQuestion
 ]
 
 const validateNovel = (novel: Novel): boolean => {
-    return !!novel.id && !!novel.title && !!novel.author && !!novel.genre;
+    return validateCommonBookInfo(novel) && !!novel.genre;
 }
 
-const novelMapperStrategy: MapperStrategy<Novel> = {
+const novelMapperStrategy: BookMapperStrategy<Novel> = {
     questions: novelQuestions,
     validation: validateNovel
 }
@@ -24,16 +28,16 @@ const ebookQuestions: BookQuestions<EBook> = [
 ]
 
 const validateEBook = (ebook: EBook): boolean => {
-    return !!ebook.id && !!ebook.title && !!ebook.author && !!ebook.platform;
+    return validateCommonBookInfo(novel) && !!ebook.platform;
 }
 
-const ebookMapperStrategy: MapperStrategy<EBook> = {
+const ebookMapperStrategy: BookMapperStrategy<EBook> = {
     questions: ebookQuestions,
     validation: validateEBook
 }
 
 // setup strategy pattern mapper
-const bookTypeMapperStrategy: TypeMapperStrategy<Book> = {
+const bookTypeMapperStrategy: BookTypeMapperStrategy<Book> = {
     novel: novelMapperStrategy,
     ebook: ebookMapperStrategy
 }
@@ -47,7 +51,7 @@ const novel: Novel = {
     genre: 'Steampunk'
 }
 
-const saveToRedux = <T extends Book>(book: T, key: keyof T): void=> {
+const onChangeFunc = <T extends Book>(book: T, key: keyof T): void=> {
     dispatch({
         type: UPDATE_SINGLE_FIELD,
         payload: {
@@ -60,6 +64,6 @@ const saveToRedux = <T extends Book>(book: T, key: keyof T): void=> {
 bookTypeMapperStrategy[novel.type].questions.map((question) => {
     React.createElement(question, {
         novel,
-        saveToRedux
+        onChangeFunc
     })
 })
