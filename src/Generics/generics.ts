@@ -1,90 +1,39 @@
 
-type generic<T> = {
-    genericKey: T
-}
 
-const stuff: generic<string> = {
-    genericKey: ''
-}
-
-interface Interface_Generic<T> {
-    genericKey: T
-}
-
-const another: Interface_Generic<string> = {
-    genericKey: ''
-}
-
-function thisIsAFunction<T>(another: generic<T> ): T {
-    return another.genericKey;
-}
-
-
-const a = 5 + '6' + {} ;
-
-console.log(typeof(a), a)
-
-
-type Without<T, U> = Pick<T, Exclude<keyof T, U>>;
-
-
-enum PetKey { 
-    SPECIES = 'species',
-    NAME = 'name',
-    OWNER = 'owner',
-    AGE = 'age'
-}
-
-type TPet = {
-    [key in PetKey]: string | number
-}
-
-type TWildAnimal = Without<Pet, 'owner'> & {
-    isExtinct: boolean;
-};
-
-const tPet: TPet = {
-    species: '',
-    name: '',
-    owner: '',
-    age: 1
-}
-const tWildAnimal: TWildAnimal = {
-    species: '',
-    name: '',
-    age: 1,
-    isExtinct: true
-}
-
-
-type Pet = {
-    species: string;
+interface Pet {
     name: string;
-    owner: string;
-    age: number;
+    feed(): void;
+    isFull: boolean;
 }
 
-
-const pet: Pet = {
-    species: '',
-    name: '',
-    owner: '',
-    age: 0
+interface Dog extends Pet {
+    goForAWalk(): void;
 }
 
-type WildAnimal = Without<Pet, 'owner'> & {
-    isExtinct: boolean;
-};
-
-const wild: WildAnimal = {
-    species: '',
-    name: '',
-    age: 0,
-    isExtinct: false
+interface Horse extends Pet {
+    putOnSaddle(): void;
 }
 
+interface Car {
+    model: string;
+}
 
+interface PeopleWithPet<T extends Pet> {
+    fullName: string;
+    pet: T;
+}
 
-type stuff = Exclude<keyof Pet, 'species'>
+const jockey: PeopleWithPet<Horse> = {
+    fullName: '',
+    isFull: false,
+    pet: {
+        name: '',
+        feed: () => {},
+        putOnSaddle: () => {}
+    }
+}
 
-const variable: stuff = 'name';
+const feedYourPet = (pet: Pet): void => {
+    if(!pet.isFull)
+        pet.feed;
+}
