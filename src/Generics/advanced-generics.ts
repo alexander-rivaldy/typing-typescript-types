@@ -88,3 +88,13 @@ const wild: WildAnimal = {
 type stuff = Exclude<keyof Pet, 'species'>
 
 const variable: stuff = 'name';
+
+type c = Pick<T, Exclude<keyof T, U>>
+type a = Pick<Pet, Exclude<keyof Pet, 'owner'>>;
+type b = Pick<Pet, Exclude<'name' | 'species' | 'age' | 'owner', 'owner'>>;
+type d = Pick<Pet, 'name' | 'species' | 'age'>;
+type e = {
+    name: string,
+    species: string,
+    age: number
+};

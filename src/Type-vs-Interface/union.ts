@@ -32,6 +32,10 @@ interface ICaughtAnimal {
     [type: string]: (Fish | Bug) & { caught: boolean};
 }
 
+interface CaughtAnimal<T> extends T {
+    caught: boolean;
+}
+
 const ICaughtAnimal: ICaughtAnimal = {
     seaBass: {
         livesInRiver: false,
@@ -44,3 +48,4 @@ const ICaughtAnimal: ICaughtAnimal = {
 }
 
 console.log(typeof ICaughtAnimal)
+
