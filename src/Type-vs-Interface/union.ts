@@ -1,5 +1,7 @@
 
 
+//  type union
+
 // type Fish = {
 //     livesInRiver: boolean;
 // }
@@ -20,32 +22,60 @@
 //     caught: false
 // }
 
-interface Fish {
-    livesInRiver: boolean;
+// interface trying to use type union
+
+// interface Fish {
+//     livesInRiver: boolean;
+// }
+
+// interface Bug {
+//     spawnsOnTrees: boolean;
+// }
+
+// interface ICaughtAnimal {
+//     [type: string]: (Fish | Bug) & { caught: boolean};
+// }
+
+// interface CaughtAnimal<T> extends T {
+//     caught: boolean;
+// }
+
+// const ICaughtAnimal: ICaughtAnimal = {
+//     seaBass: {
+//         livesInRiver: false,
+//         caught: true
+//     },
+//     moth: {
+//         spawnsOnTrees: false,
+//         caught: false
+//     }
+// }
+
+// console.log(typeof ICaughtAnimal)
+
+
+
+interface Animal {
+    species: string;
 }
 
-interface Bug {
-    spawnsOnTrees: boolean;
+interface Fish extends Animal {
+    waterHabitat: string;
 }
 
-interface ICaughtAnimal {
-    [type: string]: (Fish | Bug) & { caught: boolean};
+interface Bug extends Animal {
+    hardExoskeleton: boolean;
 }
 
-interface CaughtAnimal<T> extends T {
-    caught: boolean;
+
+type TAnimal = {
+    species: string
 }
 
-const ICaughtAnimal: ICaughtAnimal = {
-    seaBass: {
-        livesInRiver: false,
-        caught: true
-    },
-    moth: {
-        spawnsOnTrees: false,
-        caught: false
-    }
+type TFish = TAnimal & {
+    waterHabitat: string;
 }
 
-console.log(typeof ICaughtAnimal)
-
+type TBug = TAnimal & {
+    hardExoskeleton: boolean;
+}
