@@ -1,4 +1,4 @@
-import { Book,  Novel, BookMapperStrategy, BookTypeMapperStrategy, EBook, BookQuestionProps } from './type'
+import { Book,  Novel, BookMapperStrategy, BookTypeMapperStrategy, EBook, BookQuestionProps, BookQuestion } from './type'
 import { titleQuestion, genreQuestion, platformQuestion } from './components'
 import React from 'react';
 
@@ -7,7 +7,7 @@ const validateCommonBookInfo = (book: Book): boolean =>
     !!novel.id && !!novel.title && !!novel.author
 
 //specific strategy for novel
-const novelQuestions: React.FunctionComponent<BookQuestionProps<Novel>>[] = [
+const novelQuestions: BookQuestion<Novel>[] = [
     titleQuestion,
     genreQuestion
 ]
@@ -22,7 +22,7 @@ const novelMapperStrategy: BookMapperStrategy<Novel> = {
 }
 
 //specific strategy for ebook
-const ebookQuestions: BookQuestions<EBook> = [
+const ebookQuestions: BookQuestion<EBook>[] = [
     titleQuestion,
     platformQuestion
 ]
@@ -37,7 +37,7 @@ const ebookMapperStrategy: BookMapperStrategy<EBook> = {
 }
 
 // setup strategy pattern mapper
-const bookTypeMapperStrategy: BookTypeMapperStrategy<Book> = {
+const bookTypeMapperStrategy: BookTypeMapperStrategy = {
     novel: novelMapperStrategy,
     ebook: ebookMapperStrategy
 }
@@ -51,6 +51,7 @@ const novel: Novel = {
     genre: 'Steampunk'
 }
 
+
 const onChangeFunc = <T extends Book>(book: T, key: keyof T): void=> {
     dispatch({
         type: UPDATE_SINGLE_FIELD,
@@ -63,7 +64,7 @@ const onChangeFunc = <T extends Book>(book: T, key: keyof T): void=> {
 
 bookTypeMapperStrategy[novel.type].questions.map((question) => {
     React.createElement(question, {
-        novel,
+        book: novel,
         onChangeFunc
     })
 })

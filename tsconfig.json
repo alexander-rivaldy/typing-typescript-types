@@ -1,0 +1,6 @@
+{
+    "tsx": "react",
+    "include": [
+        "./src/Genericss/strategy-pattern/*"
+      ]
+}
