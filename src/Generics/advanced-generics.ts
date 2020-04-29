@@ -43,6 +43,17 @@ type TWildAnimal = Without<TPet, 'owner'> & {
     isExtinct: boolean;
 };
 
+type OMITWildAnimal = Omit<TPet, 'owner'> & {
+    isExtinct: boolean;
+}
+
+const omitWildAnimal: OMITWildAnimal = {
+    species: '',
+    name: '',
+    age: 1,
+    isExtinct: true
+}
+
 const tPet: TPet = {
     species: '',
     name: '',
@@ -89,12 +100,12 @@ type stuff = Exclude<keyof Pet, 'species'>
 
 const variable: stuff = 'name';
 
-type c = Pick<T, Exclude<keyof T, U>>
-type a = Pick<Pet, Exclude<keyof Pet, 'owner'>>;
-type b = Pick<Pet, Exclude<'name' | 'species' | 'age' | 'owner', 'owner'>>;
-type d = Pick<Pet, 'name' | 'species' | 'age'>;
-type e = {
-    name: string,
-    species: string,
-    age: number
-};
+// type c = Pick<T, Exclude<keyof T, U>>
+// type a = Pick<Pet, Exclude<keyof Pet, 'owner'>>;
+// type b = Pick<Pet, Exclude<'name' | 'species' | 'age' | 'owner', 'owner'>>;
+// type d = Pick<Pet, 'name' | 'species' | 'age'>;
+// type e = {
+//     name: string,
+//     species: string,
+//     age: number
+// };

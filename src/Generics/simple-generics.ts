@@ -50,3 +50,5 @@ const sortByKey = <T, U extends keyof T >(values: T[], key: U): T[] => {
 }
 sortByKey(points, 'x');
 sortByKey(students, 'id');
+
+sortByKey<Student, keyof Student>(students, 'id');
